@@ -18,10 +18,13 @@
             <router-link to="/">
               <v-toolbar-title to="/">{{appTitle}}</v-toolbar-title>
             </router-link>
-            <v-btn to="/about" flat class="hidden-sm-and-down">About</v-btn>
+            <v-btn to="/secure" flat class="hidden-sm-and-down">Secure</v-btn>
             <v-spacer class="hidden-sm-and-down"></v-spacer>
-            <v-btn to="/sign-in" flat class="hidden-sm-and-down">SIGN IN</v-btn>
-            <v-btn to="/register" color="blue-grey lighten-3" class="hidden-sm-and-down">REGISTER</v-btn>
+            <div v-if="!isAuthenticated" class="hidden-sm-and-down">
+              <v-btn flat to="/sign-in">SIGN IN</v-btn>
+              <v-btn color="brown lighten-3" to="/register">Register</v-btn>
+            </div>
+            <v-btn v-else outline color="white" @click="logout">Logout</v-btn>
         </v-toolbar>
     </span>
 </template>
@@ -34,10 +37,20 @@ export default {
       appTitle: 'VueX Firebase Base',
       drawer: false,
       items: [
-        { title: 'About' },
+        { title: 'Secure' },
         { title: 'Sign In' },
         { title: 'Register' },
       ]
+    }
+  },
+  computed: {
+    isAuthenticated() {
+      return this.$store.getters.isAuthenticated;
+    }
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch('userSignOut');
     }
   }
 };
