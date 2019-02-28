@@ -1,18 +1,25 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
-  </div>
+  <span>
+    <HomeHero />
+    <v-btn color="success" @click="showPosts('posts')">Get posts</v-btn>
+    <ShowPosts />
+  </span>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+import HomeHero from '@/components/HomeHero'
+import ShowPosts from '@/components/ShowPosts'
 
 export default {
   name: "home",
   components: {
-    HelloWorld
-  }
+    HomeHero,
+    ShowPosts
+  },
+  methods: {
+    showPosts(type) {
+      this.$store.dispatch('getPosts', type);
+    }
+  },
 };
 </script>
